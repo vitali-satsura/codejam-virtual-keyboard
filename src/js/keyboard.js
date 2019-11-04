@@ -331,6 +331,38 @@ class keyboard {
     });
   }
 
+  toggleCase() {
+    if (!this.isShiftPressed) {
+      const keyElements = document.querySelectorAll('.key');
+      keyElements.forEach((keyElement) => {
+        if (this.lang === 'eng') {
+          if (keyElement.classList[1].includes('Key')) {
+            const spanElements = keyElement.querySelectorAll(`.${this.lang}`);
+            spanElements.forEach(element => {
+              element.classList.toggle('hidden');
+            });
+          }
+        } else {
+          const keys = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+          keys.forEach((value) => {
+            if (keyElement.classList[1].includes('Key') || keyElement.classList.contains(value)) {
+              const spanElements = keyElement.querySelectorAll(`.${this.lang}`);
+              spanElements.forEach(element => {
+                element.classList.toggle('hidden');
+              });
+            }
+          });
+        }
+      });
+    } else {
+      const spanElements = document.querySelectorAll(`.${this.lang}`);
+      spanElements.forEach(element => {
+        element.classList.toggle('hidden');
+      });
+      this.caseState === 'upper' ? this.caseState = 'lower' : this.caseState = 'upper';
+    }
+  }
+
 
 }
 
