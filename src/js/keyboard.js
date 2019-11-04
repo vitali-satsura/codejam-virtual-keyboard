@@ -244,6 +244,84 @@ class keyboard {
     element.classList.remove('active');
   }
 
+  mouseClick(keyElement, key) {
+    keyElement.addEventListener('click', (event) => {
+      textarea.focus();
+      const text = keyElement.querySelector(':not(.hidden)').textContent;
+      switch (key) {
+        case 'Backspace':
+          textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+          break;
+
+        case 'CapsLock':
+          this.toggleCase();
+          break;
+
+        case 'Tab':
+          textarea.value += '\t';
+          break;
+
+        case 'Delete':
+          if (textarea.selectionStart < textarea.value.length) {
+            const tmp = textarea.selectionStart;
+            textarea.value = textarea.value.slice(0, textarea.selectionStart) +
+              textarea.value.slice(textarea.selectionStart + 1, textarea.value.length);
+            textarea.selectionStart = tmp;
+          }
+
+          break;
+
+        case 'Enter':
+          textarea.value += '\n';
+          break;
+
+        case 'Space':
+          textarea.value += ' ';
+          break;
+
+        case 'ShiftRight':
+          break;
+
+        case 'ShiftLeft':
+          break;
+
+        case 'ControlLeft':
+          break;
+
+        case 'ControlRight':
+          break;
+
+        case 'AltLeft':
+          break;
+
+        case 'AltRight':
+          break;
+
+        case 'ArrowLeft':
+          textarea.selectionEnd -= 1;
+          break;
+
+        case 'ArrowRight':
+          textarea.selectionStart += 1;
+          break;
+
+        case 'ArrowUp':
+          textarea.selectionEnd -= textarea.length;
+          break;
+
+        case 'ArrowDown':
+          break;
+
+        case 'MetaLeft':
+          break;
+
+        default:
+          textarea.value += text;
+          break;
+      }
+    })
+  }
+
 
 }
 
