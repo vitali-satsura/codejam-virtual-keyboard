@@ -129,6 +129,15 @@ class keyboard {
     return fragment;
   }
 
+  language(language) {
+    if (localStorage.getItem('language')) {
+      this.lang = localStorage.getItem('language');
+    } else {
+      localStorage.setItem('language', language);
+      this.lang = lang;
+    }
+  }
+
   keyDown() {
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
@@ -319,7 +328,7 @@ class keyboard {
           textarea.value += text;
           break;
       }
-    })
+    });
   }
 
 
