@@ -128,4 +128,125 @@ class keyboard {
 
     return fragment;
   }
+
+  keyDown() {
+    document.addEventListener('keydown', (event) => {
+      event.preventDefault();
+      textarea.focus();
+      const keyElement = document.querySelector(`.${event.code}`);
+      const text = keyElement.querySelector(':not(.hidden)').textContent;
+
+      this.addActiveState(keyElement);
+
+      switch (event.code) {
+        case 'Backspace':
+          textarea.value = textarea.value.slice(0, textarea.value.length - 1);
+          break;
+
+        case 'CapsLock':
+          this.toggleCase();
+          break;
+
+        case 'Tab':
+          textarea.value += '\t';
+          break;
+
+        case 'Delete':
+          if (textarea.selectionStart < textarea.value.length) {
+            const tmp = textarea.selectionStart;
+            textarea.value = textarea.value.slice(0, textarea.selectionStart) +
+              textarea.value.slice(textarea.selectionEnd + 1, textarea.value.length);
+            textarea.selectionStart = tmp;
+          }
+
+          break;
+
+        case 'Enter':
+          textarea.value += '\n';
+          break;
+
+        case 'Space':
+          textarea.value += ' ';
+          break;
+
+        case 'ShiftRight':
+          if (!this.isShiftPressed) {
+            this.isShiftPressed = true;
+            this.toggleCase();
+          }
+          break;
+
+        case 'ShiftLeft':
+          if (!this.isShiftPressed) {
+            this.isShiftPressed = true;
+            this.toggleCase();
+          }
+          break;
+
+        case 'ControlLeft':
+          break;
+
+        case 'ControlRight':
+          break;
+
+        case 'AltLeft':
+          break;
+
+        case 'AltRight':
+          break;
+
+        case 'ArrowLeft':
+          textarea.selectionEnd -= 1;
+          break;
+
+        case 'ArrowRight':
+          textarea.selectionStart += 1;
+          break;
+
+        case 'ArrowUp':
+
+          break;
+
+        case 'ArrowDown':
+          break;
+
+        case 'MetaLeft':
+          break;
+
+        default:
+          textarea.value += text;
+          break;
+      }
+
+      if (event.ctrlKey && event.altKey) {
+        this.changeLanguage();
+      }
+
+    });
+  }
+
+  keyUp() {
+    document.addEventListener('keyup', (event) => {
+      const keyElement = document.querySelector(`.${event.code}.active`);
+      if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+        this.toggleCase();
+        this.isShiftPressed = false;
+      }
+      this.removeActiveState(keyElement);
+    });
+  }
+
+  addActiveState(element) {
+    element.classList.add('active');
+  }
+
+  removeActiveState(element) {
+    element.classList.remove('active');
+  }
 }
+
+
+window.addEventListener("DOMContentLoaded", function () {
+  const keyboard = new Keyboard();
+  keyboard.init();
+});

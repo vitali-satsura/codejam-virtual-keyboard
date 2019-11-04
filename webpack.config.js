@@ -66,7 +66,7 @@ module.exports = {
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "bundle.css"
+            filename: "main.css"
         })
     ]
 };
