@@ -4,19 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack --watch",
+    "dev": "webpack-dev-server --open"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vitali-satsura/repair-design-project.git"
+    "url": "git+https://github.com/vitali-satsura/codejam-virtual-keyboard.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vitali-satsura/repair-design-project/issues"
+    "url": "https://github.com/vitali-satsura/codejam-virtual-keyboard/issues"
   },
-  "homepage": "https://github.com/vitali-satsura/repair-design-project#readme",
+  "homepage": "https://github.com/vitali-satsura/codejam-virtual-keyboard#readme",
   "devDependencies": {
     "autoprefixer": "^9.6.4",
     "css-loader": "^3.2.0",
