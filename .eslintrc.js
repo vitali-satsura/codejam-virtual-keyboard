@@ -4,6 +4,12 @@ module.exports = {
         "es6": true
     },
     "extends": "airbnb",
+    "plugins": ["react"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"

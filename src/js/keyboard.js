@@ -1,18 +1,14 @@
 
 import {
-  ROW1, ROW2, ROW3, ROW4, ROW5
+  ROW1, ROW2, ROW3, ROW4, ROW5,
 } from './data';
 
-export class Keyboard {
+class Keyboard {
   constructor() {
     this.lang = '';
     this.isShiftPressed = false;
     this.caseState = 'lower';
   }
-
-  // lang = '';
-  // isShiftPressed = false;
-  // caseState = 'lower';
 
   init() {
     this.language('eng');
@@ -37,7 +33,7 @@ export class Keyboard {
     const row = document.createElement('div');
     row.classList.add('row');
 
-    keyRow.forEach(key => {
+    keyRow.forEach((key) => {
       const keyElement = document.createElement('div');
       keyElement.classList.add('key');
       if (this.lang === 'eng') {
@@ -64,18 +60,19 @@ export class Keyboard {
       this.lang = localStorage.getItem('language');
     } else {
       localStorage.setItem('language', language);
-      this.lang = lang;
+      this.lang = language;
     }
   }
 
   keyDown() {
     document.addEventListener('keydown', (event) => {
       event.preventDefault();
+      const textarea = document.getElementById('textarea');
       textarea.focus();
       const keyElement = document.querySelector(`.${event.code}`);
       const text = keyElement.querySelector(':not(.hidden)').textContent;
 
-      this.addActiveState(keyElement);
+      Keyboard.addActiveState(keyElement);
 
       switch (event.code) {
         case 'Backspace':
@@ -93,11 +90,10 @@ export class Keyboard {
         case 'Delete':
           if (textarea.selectionStart < textarea.value.length) {
             const tmp = textarea.selectionStart;
-            textarea.value = textarea.value.slice(0, textarea.selectionStart) +
-              textarea.value.slice(textarea.selectionEnd + 1, textarea.value.length);
+            textarea.value = textarea.value.slice(0, textarea.selectionStart)
+              + textarea.value.slice(textarea.selectionEnd + 1, textarea.value.length);
             textarea.selectionStart = tmp;
           }
-
           break;
 
         case 'Enter':
@@ -160,31 +156,32 @@ export class Keyboard {
       if (event.ctrlKey && event.altKey) {
         this.changeLanguage();
       }
-
     });
   }
 
   keyUp() {
     document.addEventListener('keyup', (event) => {
       const keyElement = document.querySelector(`.${event.code}.active`);
+
       if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
         this.toggleCase();
         this.isShiftPressed = false;
       }
-      this.removeActiveState(keyElement);
+      Keyboard.removeActiveState(keyElement);
     });
   }
 
-  addActiveState(element) {
+  static addActiveState(element) {
     element.classList.add('active');
   }
 
-  removeActiveState(element) {
+  static removeActiveState(element) {
     element.classList.remove('active');
   }
 
   mouseClick(keyElement, key) {
-    keyElement.addEventListener('click', (event) => {
+    keyElement.addEventListener('click', () => {
+      const textarea = document.getElementById('textarea');
       textarea.focus();
       const text = keyElement.querySelector(':not(.hidden)').textContent;
       switch (key) {
@@ -203,11 +200,10 @@ export class Keyboard {
         case 'Delete':
           if (textarea.selectionStart < textarea.value.length) {
             const tmp = textarea.selectionStart;
-            textarea.value = textarea.value.slice(0, textarea.selectionStart) +
-              textarea.value.slice(textarea.selectionStart + 1, textarea.value.length);
+            textarea.value = textarea.value.slice(0, textarea.selectionStart)
+              + textarea.value.slice(textarea.selectionStart + 1, textarea.value.length);
             textarea.selectionStart = tmp;
           }
-
           break;
 
         case 'Enter':
@@ -262,39 +258,16 @@ export class Keyboard {
   }
 
   toggleCase() {
-    if (!this.isShiftPressed) {
-      const keyElements = document.querySelectorAll('.key');
-      keyElements.forEach((keyElement) => {
-        if (this.lang === 'eng') {
-          if (keyElement.classList[1].includes('Key')) {
-            const spanElements = keyElement.querySelectorAll(`.${this.lang}`);
-            spanElements.forEach(element => {
-              element.classList.toggle('hidden');
-            });
-          }
-        } else {
-          const keys = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
-          keys.forEach((value) => {
-            if (keyElement.classList[1].includes('Key') || keyElement.classList.contains(value)) {
-              const spanElements = keyElement.querySelectorAll(`.${this.lang}`);
-              spanElements.forEach(element => {
-                element.classList.toggle('hidden');
-              });
-            }
-          });
-        }
-      });
-    } else {
-      const spanElements = document.querySelectorAll(`.${this.lang}`);
-      spanElements.forEach(element => {
-        element.classList.toggle('hidden');
-      });
-      this.caseState === 'upper' ? this.caseState = 'lower' : this.caseState = 'upper';
-    }
+    const spanElements = document.querySelectorAll(`.${this.lang}`);
+    spanElements.forEach((element) => {
+      element.classList.toggle('hidden');
+    });
+
+    this.caseState = (this.caseState === 'upper') ? 'lower' : 'upper';
   }
 
   changeLanguage() {
-    const currentElements = keyboard.querySelectorAll(`.${this.lang}.${this.caseState}`);
+    const currentElements = document.querySelectorAll(`.${this.lang}.${this.caseState}`);
     currentElements.forEach((element) => {
       element.classList.toggle('hidden');
     });
@@ -307,14 +280,11 @@ export class Keyboard {
       localStorage.setItem('language', 'eng');
     }
 
-    const hiddenElements = keyboard.querySelectorAll(`.${this.lang}.${this.caseState}`);
+    const hiddenElements = document.querySelectorAll(`.${this.lang}.${this.caseState}`);
     hiddenElements.forEach((element) => {
       element.classList.toggle('hidden');
     });
   }
-
-
 }
 
-
-
+export default Keyboard;
