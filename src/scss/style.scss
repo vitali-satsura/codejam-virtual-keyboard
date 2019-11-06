@@ -1,0 +1,111 @@
+.container {  
+  height: 100vh;
+  background: rgb(10,10,10);
+  background: linear-gradient(15deg, rgba(10,10,10,0.9192051820728291) 29%, rgba(2,1,13,0.8239670868347339) 80%);
+}
+
+.textarea {
+  margin: 0 auto 30px;
+  display: block;
+  width: 820px;
+  height: 300px;
+  padding: 20px;  
+  border: 6px solid #047e65;
+  font-size: 18px;
+}
+
+
+.keyboard {
+  margin: 0 auto; 
+  
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  margin-bottom: 5px;
+}
+
+.key {
+  margin-left: 5px;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #014e3f;  
+  height: 50px;
+  width: 50px;
+  border-radius: 6px;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-radius 0.4s, background 0.5s;
+}
+
+.key:hover {
+  background-color: #013b30; 
+}
+
+.hidden {
+  display: none;
+}
+
+.Backspace {
+  width: 130px;
+}
+
+.Tab {
+  width: 75px;
+}
+.Space {
+  width: 375px;
+}
+.CapsLock {
+  width: 90px;
+}
+.Enter {
+  width: 145px;
+}
+.ShiftLeft {
+  width: 100px;
+}
+.ShiftRight {
+  width: 134px;
+}
+.ControlRight {
+  width: 80px;
+}
+
+.Backspace, 
+.Tab,
+.Delete,
+.CapsLock,
+.Enter,
+.ShiftRight,
+.ShiftLeft,
+.ControlRight,
+.ControlLeft,
+.AltLeft,
+.AltRight,
+.ArrowUp,
+.ArrowDown,
+.ArrowLeft,
+.ArrowRight,
+.MetaLeft {
+  background-color: #023b2d;
+}
+
+.key:active {  
+  background-color: #0f023d;
+  border-radius: 50px;
+}
+
+.key.active {   
+  background-color: #0f023d;
+  border-radius: 50px;  
+}
