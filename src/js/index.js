@@ -1,8 +1,8 @@
 import '../scss/style.scss';
-import '../../node_modules/normalize.css/normalize.css';
+import 'normalize.css/normalize.css';
 import Keyboard from './keyboard';
 
-window.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", () => {
   const keyboard = new Keyboard();
   keyboard.init();
 });

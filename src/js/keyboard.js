@@ -3,6 +3,9 @@ import {
   ROW1, ROW2, ROW3, ROW4, ROW5,
 } from './data';
 
+const ENG = 'eng';
+const RUS = 'rus';
+
 class Keyboard {
   constructor() {
     this.lang = '';
@@ -11,10 +14,16 @@ class Keyboard {
   }
 
   init() {
-    this.language('eng');
+    this.language(ENG);
 
     document.body.insertAdjacentHTML('afterBegin',
-      '<div class="container"><textarea id="textarea" class="textarea" rows="5" cols="50"></textarea><div id="keyboard" class="keyboard"></div></div>');
+      `<div class="container">
+        <textarea id="textarea" class="textarea" rows="5" cols="50">
+        </textarea>
+        <div id="keyboard" class="keyboard">
+        </div>
+      </div>`
+    );
 
     const kb = document.getElementById('keyboard');
     kb.appendChild(this.createKeys(ROW1));
@@ -36,12 +45,20 @@ class Keyboard {
     keyRow.forEach((key) => {
       const keyElement = document.createElement('div');
       keyElement.classList.add('key');
-      if (this.lang === 'eng') {
+      if (this.lang === ENG) {
         keyElement.insertAdjacentHTML('afterBegin',
-          `<span class="rus lower hidden">${key[3]}</span><span class="rus upper hidden">${key[4]}</span><span class="eng lower">${key[1]}</span><span class="eng upper hidden">${key[2]}</span>`);
+          `<span class="rus lower hidden">${key[3]}</span>
+           <span class="rus upper hidden">${key[4]}</span>
+           <span class="eng lower">${key[1]}</span>
+           <span class="eng upper hidden">${key[2]}</span>`
+        );
       } else {
         keyElement.insertAdjacentHTML('afterBegin',
-          `<span class="rus lower">${key[3]}</span><span class="rus upper hidden">${key[4]}</span><span class="eng lower hidden">${key[1]}</span><span class="eng upper hidden">${key[2]}</span>`);
+          `<span class="rus lower">${key[3]}</span>
+           <span class="rus upper hidden">${key[4]}</span>
+           <span class="eng lower hidden">${key[1]}</span>
+           <span class="eng upper hidden">${key[2]}</span>`
+        );
       }
 
       keyElement.classList.add(key[0]);
@@ -55,12 +72,12 @@ class Keyboard {
     return fragment;
   }
 
-  language(language) {
+  language(lang) {
     if (localStorage.getItem('language')) {
       this.lang = localStorage.getItem('language');
     } else {
-      localStorage.setItem('language', language);
-      this.lang = language;
+      localStorage.setItem('language', lang);
+      this.lang = lang;
     }
   }
 
@@ -272,12 +289,12 @@ class Keyboard {
       element.classList.toggle('hidden');
     });
 
-    if (this.lang === 'eng') {
-      this.lang = 'rus';
-      localStorage.setItem('language', 'rus');
+    if (this.lang === ENG) {
+      this.lang = RUS;
+      localStorage.setItem('language', RUS);
     } else {
-      this.lang = 'eng';
-      localStorage.setItem('language', 'eng');
+      this.lang = ENG;
+      localStorage.setItem('language', ENG);
     }
 
     const hiddenElements = document.querySelectorAll(`.${this.lang}.${this.caseState}`);
